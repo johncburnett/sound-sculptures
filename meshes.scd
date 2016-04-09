@@ -134,7 +134,7 @@ s.waitForBoot({
 
 
 	SynthDef(\Melting,{ |amp = 0.0|
-		var in, d1, d2, d3, d4, pan, mix;
+		var in, d1, d2, p1, p2, p3, p4, pan, mix;
 
 		in = In.ar(10, 2);
 
@@ -161,9 +161,19 @@ s.waitForBoot({
 		} ).sum / 2;
 
 		pan = LinLin.kr(SinOsc.kr(0.125), -1.0, 1.0, -0.6, 0.6);
-		d1 = Pan2.ar(d1, pan);
-		d2 = Pan2.ar(d2, -1.0*pan);
-		mix = [d1, d2] * amp;
+
+		if( ~quad == True,{
+			p1 = Pan4.ar(d1, pan, pan);
+			p2 = Pan4.ar(d2, -1*pan, pan);
+			p3 = Pan4.ar(d1, pan, -1*pan);
+			p4 = Pan4.ar(d2, -1*pan, -1*pan);
+			mix = [p1, p2, p3, p4] * amp;
+		},{
+			d1 = Pan2.ar(d1, pan);
+			d2 = Pan2.ar(d2, -1.0*pan);
+			mix = [d1, d2] * amp;
+		});
+
 		Out.ar(20, mix);
 	}).load(s);
 
