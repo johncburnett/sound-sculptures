@@ -1,3 +1,3 @@
-# sound-design
+# sound-sculpting
 
-An archive of various sound experiments. Mostly built in supercollider.
+An archive of audio processing techniques, digital instruments, and sound installations. 
