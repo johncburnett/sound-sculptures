@@ -1,8 +1,8 @@
 (
 /*
-* We are sitting in a room by John Burnett (c)2015
+* We are sitting in a room - John Burnett (c)2015
 *
-* Instructions: Edit -> Evaluate File
+* Instructions: Language -> Evaluate File
 *
 * IO:
 * in - 1ch

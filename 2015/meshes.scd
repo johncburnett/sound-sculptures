@@ -1,8 +1,8 @@
 (
 /**
-* Performance Code for meshes by John Burnett (c)2016
+* Performance Code by John Burnett (c)2016
 *
-* Instructions: Edit -> Evaluate File
+* Instructions: Language -> Evaluate File
 *
 * Quad:
 *       1    2
@@ -15,8 +15,8 @@
 //_Init
 
 //_Routing
-~num_inputs = 2; // 1 or 2
-~quad = True;   // stereo or quad
+~num_inputs = 1; // 1 or 2
+~quad = False;   // stereo or quad
 
 
 //_GUI
@@ -24,9 +24,10 @@
 ~height = 600;
 
 
+//_Server
 s = Server.local;
 o = s.options;
-o.memSize_(2e6); // 2GB
+o.memSize_(2e6); // 2GB of RAM
 o.numOutputBusChannels = 4;
 
 
@@ -72,10 +73,10 @@ s.waitForBoot({
 			SinOsc.kr( LinLin.kr(SinOsc.ar(1/16), -1.0, 1.0, 0.25, 1) ),
 			-1.0,
 			1.0,
-			5000,
-			1000);
+			1000,
+			100);
 
-		pan = LinLin.kr(SinOsc.kr(1/8), -1.0, 1.0, -0.7, 0.7);
+		pan = LinLin.kr(SinOsc.kr(1/16), -1.0, 1.0, -0.7, 0.7);
 
 		in1 = LPF.ar(in1, lfo1);
 		in2 = HPF.ar(in2, lfo2);
@@ -242,8 +243,8 @@ s.waitForBoot({
 
 	/**************************************************************************************************/
 	//_GUI
-	//_Window
 
+	//_Window
 	w = Window("GUI", Rect(
 		Window.screenBounds.width/2 - (~width/2),
 		Window.screenBounds.height/2 - (~height/2),
@@ -252,7 +253,8 @@ s.waitForBoot({
 	))
 	.background_(Color(0.1, 0.1, 0.1))
 	.front
-	.alwaysOnTop_(true);
+	.alwaysOnTop_(true)
+	.onClose_({ Server.killAll });
 
 	s.meter;
 
@@ -337,5 +339,6 @@ s.waitForBoot({
 	//_Initial Value
 	~faders[0][0].value_(1.0);
 	~faders[0][6].value_(1.0);
+
 });
 )
